@@ -43,7 +43,10 @@ public class HikariDataSourceConnectionFactory implements ConnectionFactory {
      * @throws SQLException
      */
     public Connection getNewConnection() throws SQLException {
+        long time1 = System.currentTimeMillis();
         Connection connection = dataSource.getConnection();
+        long time2 = System.currentTimeMillis();
+        System.out.println(String.format("Время формирования соединения составляет %d ms", time2-time1));
         // устанавливаем уровень изоляции транзакции
         connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
         return connection;

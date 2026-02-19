@@ -35,27 +35,47 @@ public class Main {
             // создаем таблицы
             tablesFactory.create(connection);
             connection.commit();
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        UserEntity user = null;
+        try (Connection connection = connectionFactory.getNewConnection()){
             // сохраняем нового пользователя в базу
-            UserEntity user = new UserEntity();
+            user = new UserEntity();
             user.setID(1);
             user.setName("Пользователь");
             user = userDao.create(connection, user);
             connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        try (Connection connection = connectionFactory.getNewConnection()){
             // читаем данные о пользователе из базы
             user = userDao.read(connection, user.getID());
             connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        try (Connection connection = connectionFactory.getNewConnection()){
             // обновляем данные пользователя в базе
             user.setBirthday(Date.valueOf("2026-01-01"));
             user = userDao.update(connection, user);
             connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        try (Connection connection = connectionFactory.getNewConnection()){
             // удаляем пользователя из базы
             userDao.delete(connection, user.getID());
             connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        try (Connection connection = connectionFactory.getNewConnection()){
             // удаляем таблицы
             tablesFactory.delete(connection);
             connection.commit();

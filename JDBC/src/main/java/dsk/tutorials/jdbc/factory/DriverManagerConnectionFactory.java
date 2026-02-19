@@ -24,7 +24,10 @@ public class DriverManagerConnectionFactory implements ConnectionFactory {
      * @throws SQLException
      */
     public Connection getNewConnection() throws SQLException {
+        long time1 = System.currentTimeMillis();
         Connection connection = DriverManager.getConnection(url, user, password);
+        long time2 = System.currentTimeMillis();
+        System.out.println(String.format("Время формирования соединения составляет %d ms", time2-time1));
         // отключаем режим автоматического коммита
         connection.setAutoCommit(false);
         // устанавливаем уровень изоляции транзакции
