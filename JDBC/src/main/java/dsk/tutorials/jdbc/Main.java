@@ -1,9 +1,10 @@
 package dsk.tutorials.jdbc;
 
+import dsk.tutorials.jdbc.common.ConnectionFactory;
 import dsk.tutorials.jdbc.common.TablesFactory;
 import dsk.tutorials.jdbc.dao.UserDao;
 import dsk.tutorials.jdbc.entity.UserEntity;
-import dsk.tutorials.jdbc.factory.ConnectionFactory;
+import dsk.tutorials.jdbc.factory.HikariDataSourceConnectionFactory;
 import dsk.tutorials.jdbc.factory.PostgreSQLTablesFactory;
 
 import java.sql.Connection;
@@ -11,6 +12,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class Main {
+
+    // https://github.com/dskichigin/tutorials.git
 
     public void start() {
         // jdbc:mysql://host:33060/database
@@ -21,35 +24,41 @@ public class Main {
         String dbPassword = "tutorials";
 
         // подготавливаем необходимые классы для работы
-        ConnectionFactory connectionFactory = new ConnectionFactory(dbUrl, dbUser, dbPassword);
+//        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(dbUrl, dbUser, dbPassword);
+        ConnectionFactory connectionFactory = new HikariDataSourceConnectionFactory(dbUrl, dbUser, dbPassword);
         TablesFactory tablesFactory = new PostgreSQLTablesFactory();
         UserDao userDao = new UserDao();
 
         try (Connection connection = connectionFactory.getNewConnection()){
             System.out.println(String.format("Соединение рабочее = %b", connection.isValid(1)));
             System.out.println(String.format("Соединение закрыто = %b", connection.isClosed()));
-
             // создаем таблицы
             tablesFactory.create(connection);
+            connection.commit();
 
             // сохраняем нового пользователя в базу
             UserEntity user = new UserEntity();
             user.setID(1);
             user.setName("Пользователь");
             user = userDao.create(connection, user);
+            connection.commit();
 
             // читаем данные о пользователе из базы
             user = userDao.read(connection, user.getID());
+            connection.commit();
 
             // обновляем данные пользователя в базе
             user.setBirthday(Date.valueOf("2026-01-01"));
             user = userDao.update(connection, user);
+            connection.commit();
 
             // удаляем пользователя из базы
             userDao.delete(connection, user.getID());
+            connection.commit();
 
             // удаляем таблицы
             tablesFactory.delete(connection);
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
