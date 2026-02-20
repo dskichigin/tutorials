@@ -32,6 +32,9 @@ public class DriverManagerConnectionFactory implements ConnectionFactory {
         connection.setAutoCommit(false);
         // устанавливаем уровень изоляции транзакции
         connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+
+        System.out.println(String.format("Соединение рабочее = %b", connection.isValid(1)));
+        System.out.println(String.format("Соединение закрыто = %b", connection.isClosed()));
         return connection;
     }
 

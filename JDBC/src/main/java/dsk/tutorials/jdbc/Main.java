@@ -29,56 +29,47 @@ public class Main {
         TablesFactory tablesFactory = new PostgreSQLTablesFactory();
         UserDao userDao = new UserDao();
 
-        try (Connection connection = connectionFactory.getNewConnection()){
-            System.out.println(String.format("Соединение рабочее = %b", connection.isValid(1)));
-            System.out.println(String.format("Соединение закрыто = %b", connection.isClosed()));
+        try {
             // создаем таблицы
+            Connection connection = connectionFactory.getNewConnection();
             tablesFactory.create(connection);
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        UserEntity user = null;
-        try (Connection connection = connectionFactory.getNewConnection()){
+            connection.close();
+            UserEntity user = null;
+
             // сохраняем нового пользователя в базу
+            connection = connectionFactory.getNewConnection();
             user = new UserEntity();
             user.setID(1);
             user.setName("Пользователь");
             user = userDao.create(connection, user);
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            connection.close();
 
-        try (Connection connection = connectionFactory.getNewConnection()){
             // читаем данные о пользователе из базы
+            connection = connectionFactory.getNewConnection();
             user = userDao.read(connection, user.getID());
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            connection.close();
 
-        try (Connection connection = connectionFactory.getNewConnection()){
             // обновляем данные пользователя в базе
+            connection = connectionFactory.getNewConnection();
             user.setBirthday(Date.valueOf("2026-01-01"));
             user = userDao.update(connection, user);
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            connection.close();
 
-        try (Connection connection = connectionFactory.getNewConnection()){
             // удаляем пользователя из базы
+            connection = connectionFactory.getNewConnection();
             userDao.delete(connection, user.getID());
             connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            connection.close();
 
-        try (Connection connection = connectionFactory.getNewConnection()){
             // удаляем таблицы
+            connection = connectionFactory.getNewConnection();
             tablesFactory.delete(connection);
             connection.commit();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
