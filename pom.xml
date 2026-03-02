@@ -9,7 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>JDBC</module>
+        <module>1_JDBC</module>
+        <module>2_Spring</module>
     </modules>
 
     <properties>

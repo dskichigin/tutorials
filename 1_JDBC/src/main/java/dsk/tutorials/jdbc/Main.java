@@ -24,8 +24,10 @@ public class Main {
         String dbPassword = "tutorials";
 
         // подготавливаем необходимые классы для работы
+
 //        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(dbUrl, dbUser, dbPassword);
         ConnectionFactory connectionFactory = new HikariDataSourceConnectionFactory(dbUrl, dbUser, dbPassword);
+
         TablesFactory tablesFactory = new PostgreSQLTablesFactory();
         UserDao userDao = new UserDao();
 
@@ -35,11 +37,10 @@ public class Main {
             tablesFactory.create(connection);
             connection.commit();
             connection.close();
-            UserEntity user = null;
 
             // сохраняем нового пользователя в базу
             connection = connectionFactory.getNewConnection();
-            user = new UserEntity();
+            UserEntity user = new UserEntity();
             user.setID(1);
             user.setName("Пользователь");
             user = userDao.create(connection, user);
