@@ -6,4 +6,14 @@ public class UserDAO implements IUserDAO {
     public UserDAO(String url) {
         this.url = url;
     }
+
+    @Override
+    public void addUser() {
+
+    }
+
+    @Override
+    public void editUser() {
+
+    }
 }
