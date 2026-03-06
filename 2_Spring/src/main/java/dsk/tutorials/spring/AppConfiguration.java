@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 import javax.sql.DataSource;
-
 @Configuration
 @ComponentScan(basePackages = {"dsk.tutorials.spring.*"})
 @PropertySource(value = "file:${user.dir}/spring.properties", ignoreResourceNotFound = true)
+//@Import({AppConfT1.class, AppConfT2.class})
 public class AppConfiguration {
     @Value("${db.url:jdbc:postgresql://127.0.0.1/tutorials}")
     private String url;

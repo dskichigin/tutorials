@@ -10,11 +10,12 @@ import java.sql.SQLException;
 @Scope("singleton")
 @Component
 public class ConnectionFactory {
-    private DataSource dataSource = null;
+    private DataSource dataSource;
 
     public ConnectionFactory(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
     /**
      * Создаем соединение
      * @return
