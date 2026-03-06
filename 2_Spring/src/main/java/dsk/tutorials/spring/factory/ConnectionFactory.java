@@ -1,11 +1,13 @@
 package dsk.tutorials.spring.factory;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+@Scope("singleton")
 @Component
 public class ConnectionFactory {
     private DataSource dataSource = null;

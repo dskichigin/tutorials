@@ -83,3 +83,17 @@
       1. @Component
       2. @Service
       3. @Repository
+      4. @Controller
+      
+3. Расширенные методы конфигурирования Spring
+   1. Bean scopes
+      1. Singleton - создается один на все приложение, в зависимости подставляется один объект
+      2. Prototype - объект не создается пока не является зависимостью другого бина, в каждый бин инжектится собственный экземпляр
+      3. Request - бин создается на каждый web запрос и в каждом запросе он свой
+      4. Session - то же, только в рамках Servlet HTTP-сессии
+      5. Global session - то же, но только для портлетов (portlets)
+   2. Beans lifecycle
+      1. @PostConstruct
+      2. @PreDestroy
+   3. Profiles
+   4. @Autowired
