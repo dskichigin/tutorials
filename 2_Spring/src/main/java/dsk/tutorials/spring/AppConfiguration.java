@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 import javax.sql.DataSource;
+
+@Profile("pool")
 @Configuration
 @ComponentScan(basePackages = {"dsk.tutorials.spring.*"})
 @PropertySource(value = "file:${user.dir}/spring.properties", ignoreResourceNotFound = true)

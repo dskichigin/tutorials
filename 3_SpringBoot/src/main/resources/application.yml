@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: demo
+
+  datasource:
+    url: jdbc:postgresql://127.0.0.1/tutorials
+    user: tutorials
+    password: tutorials
+
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+
+server:
+  port: 8090
+
+application:
+  mode: test
+
+db:
+  url: jdbc:postgresql://127.0.0.1/tutorials
+  user: tutorials
+  password: tutorials
